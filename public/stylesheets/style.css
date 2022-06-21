@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+.text-shadow {
+  text-shadow: 1px 5px 25px #00B7FF;
+}
+
+.w-average {
+  min-width: 15rem;
+  max-width: 20rem;
+}

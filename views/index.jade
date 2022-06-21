@@ -2,6 +2,10 @@ extends layout
 
 block content
   .container.p-5 
-    .d-flex.flex-column.justify-content-center.align-items-center.mt-5   
-      h1= title
-      //- p Welcome to #{title}
+    .d-flex.flex-column.justify-content-center.align-items-center.mt-5 
+      h1.display-1.text-primary.text-shadow= title
+      .card.border-primary.my-5.px-5.pb-5.shadow 
+        .card-body
+        p.lead.text-center.mb-5 Easy leads and customer management. <br/><small class="text-muted" style="font-weight: 600;">#{title}</small>
+        a.btn.btn-outline-primary.mx-5.mb-3.shadow(href='/signup') Sign up
+        a.btn.btn-primary.mx-5.shadow(href='/login') Login

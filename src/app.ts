@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 
 import {indexRouter} from './routes/index';
+import {signUpRouter} from './routes/signup';
+import {loginRouter} from './routes/login';
 import {usersRouter} from './routes/users';
 
 export const app = express();
@@ -15,11 +17,15 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', indexRouter);
+app.use('/signup', signUpRouter);
+app.use('/login', loginRouter);
+
+
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
