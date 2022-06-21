@@ -33,12 +33,13 @@ signUpRouter.post('/', async function(req: Request, res: Response, next: NextFun
     const id = await createStaff(value);
     let data = {
         time: Date(),
-        id,
+        id: id,
     }
-  
-    const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`);
+    
+    // Sign token to expire in 2mins
+    const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`, { expiresIn: 120 });
 
-    res.header('Authorization', token);
+    res.cookie('authorization', token)
     res.redirect(301, '../users');
   });
 

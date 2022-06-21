@@ -1,5 +1,7 @@
 import fs from 'fs/promises';
-import { staffObj } from './models/model_interfaces';
+import jwt from 'jsonwebtoken';
+import { staffObj, lead } from './models/model_interfaces';
+import { NextFunction, Request, Response } from "express";
 // import bcrypt from 'bcrypt'; 
 // import Joi from 'joi';
 const debug = require('debug')('week5-009:server');
@@ -23,9 +25,31 @@ export async function writeToFile(obj: staffObj) {
     await fs.writeFile('database.json', JSON.stringify(database), 'utf8');
     return;
 }
-// export function hashPassword(passwordString: string): string {
-//     bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-//         // Store hash in your password DB.
-//     });
-//     return ''
-// }
+
+export async function isValidUser(req: Request, res: Response, next: NextFunction) {
+    const token = req.cookies.authorization
+    
+    let payload: any
+    try {
+      payload = jwt.verify(token, `Leslie_Will_Know_How_To_Code_Someday`);
+      
+      // Confirm that payload exists
+      const database = await db;
+      const exists = database.some((element: staffObj | lead) => element.id === payload.id)
+      debug(exists)
+      if (exists) {
+        next();
+      } else {
+        res.status(400);
+        return res.render('error', { message: 'Not authorized to access this page', error: {status: '', stack: ''} });
+      }
+    } catch (e: any) {
+        // set locals, only providing error in development
+        res.locals.message = e.message;
+        res.locals.error = e;
+
+        // render the error page
+        res.status(e.status || 500);
+        return res.render('error');
+    }
+}

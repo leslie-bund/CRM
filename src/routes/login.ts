@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { staffObj, lead } from "../models/model_interfaces";
 import { loginSchema } from "../models/models";
+const debug = require('debug')('week5-009:server');
 export const loginRouter = express.Router();
 
 /* GET login form page. */
@@ -44,10 +45,10 @@ loginRouter.post('/', async function(req: Request, res: Response, next: NextFunc
                 id: staff.id,
             }
           
-            const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`);
-        
-            res.header('Authorization', token);
-            return res.redirect(301, '../users');
+            const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`, { expiresIn: 120 });
+
+            res.cookie('authorization', token);
+            return res.redirect(301,'../users');
         } else {
             res.header('Refresh', '5')
             return res.render('login', {error: `Wrong Password`});
