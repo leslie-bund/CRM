@@ -37,7 +37,7 @@ signUpRouter.post('/', async function(req: Request, res: Response, next: NextFun
     }
     
     // Sign token to expire in 2mins
-    const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`, { expiresIn: 120 });
+    const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`, { expiresIn: 600 });
 
     res.cookie('authorization', token)
     res.redirect(301, '../users');

@@ -36,7 +36,7 @@ export async function isValidUser(req: Request, res: Response, next: NextFunctio
       // Confirm that payload exists
       const database = await db;
       const exists = database.some((element: staffObj | lead) => element.id === payload.id)
-      debug(exists)
+
       if (exists) {
         next();
       } else {
@@ -44,12 +44,11 @@ export async function isValidUser(req: Request, res: Response, next: NextFunctio
         return res.render('error', { message: 'Not authorized to access this page', error: {status: '', stack: ''} });
       }
     } catch (e: any) {
-        // set locals, only providing error in development
-        res.locals.message = e.message;
-        res.locals.error = e;
-
-        // render the error page
-        res.status(e.status || 500);
-        return res.render('error');
+        // Plan for errors
+        let message = [];
+        if (e.name === 'JsonWebTokenError') message.push('Kindly login with your correct credentials')
+        if (e.name === 'TokenExpiredError') message.push('Your session has timed out, Login again')
+        
+        return res.render('login', {error: message.pop()});
     }
 }

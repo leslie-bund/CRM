@@ -45,7 +45,7 @@ loginRouter.post('/', async function(req: Request, res: Response, next: NextFunc
                 id: staff.id,
             }
           
-            const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`, { expiresIn: 120 });
+            const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`, { expiresIn: 30 });
 
             res.cookie('authorization', token);
             return res.redirect(301,'../users');

@@ -34,10 +34,3 @@ usersRouter.route('/edit_user')
     .put(function(req: Request, res: Response, next: NextFunction) {
       // Call controller function
     });
-
-/** GET for logging user out */
-usersRouter.route('/logout')
-    .get(function(req: Request, res: Response) {
-      res.clearCookie('authorization')
-      res.redirect('../../')
-    })

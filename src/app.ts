@@ -25,8 +25,13 @@ app.use('/', indexRouter);
 app.use('/signup', signUpRouter);
 app.use('/login', loginRouter);
 
-
 app.use('/users', usersRouter);
+
+/** GET for logging user out */
+app.get('/logout', function(req: Request, res: Response) {
+  res.clearCookie('authorization')
+  res.redirect('/')
+})
 
 // catch 404 and forward to error handler
 app.use(function(req: Request, res: Response, next: NextFunction) {
