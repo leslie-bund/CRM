@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  .container    
+    h1.display-1.text-primary.text-shadow.text-center Leslie's CRM
+    - if (typeof errorMsg === 'string')
+        .alert.alert-warning.d-flex.align-items-center(role='alert')
+          svg.bi.bi-exclamation-triangle-fill.flex-shrink-0.me-2(xmlns="http://www.w3.org/2000/svg", width="24", height="24", fill="currentColor", viewBox="0 0 16 16", role="img", aria-label="Warning:")
+            path(d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z")
+          div= errorMsg
+    .card.border-primary.my-5.mx-lg-5.pb-5.shadow
+      .card-header.mb-3.d-flex.justify-content-between
+        a.btn.btn-primary.ms-1(href='/users') Home
+        a.btn.btn-primary.mx-1(href='/users/add') Add customer
+        a.btn.btn-primary.me-1(href='../logout') Logout
+      .card-body
+        - if ( data.length > 0 )
+            .list-group.m-2 
+                each item in data
+                    .list-group-item.list-group-item-action
+                        .d-flex.justify-content-between 
+                            .d-flex.flex-column.justify-content-start 
+                                span.mb-1.fw-bold #{item.fullname}
+                                -if (item.gender === 'f')
+                                    i.text-muted.text-info Female
+                                -else
+                                    i.text-muted.text-info Male
+                                span.text-muted.rounded.mb-1.pb-1(style='font-size: 12px; border-bottom: 1px solid grey') 📥    #{item.email}
+                                span.text-muted.rounded.mb-1.pb-1(style='font-size: 12px; border-bottom: 1px solid grey') 📞    #{item.phone}
+                                span.text-muted.rounded.mb-1.pb-1(style='font-size: 12px; border-bottom: 1px solid grey') 📍    #{item.address}
+                                span.text-muted.rounded.pb-1(style='font-size: 12px; border-bottom: 1px solid grey') 🖋    #{item.notes}
+                            div.pe-5.pt-4
+                                a.d-block.btn.btn-primary.btn-sm.mb-3(href='/users/#{item.id}') Edit
+                                a.btn.btn-danger.btn-sm(href='/users/remove/#{item.id}') Delete
+                                //- form(method='post', action='/users/remove', autocomplete='on')
+                                //-     input.visually-hidden(type='text', name='id', value='#{item.id}')
+                                //-     input.position-absolute.btn.btn-sm.btn-danger(type='submit', value='Delete')
+        - else 
+            .h1.text-muted.text-center Add a new customer

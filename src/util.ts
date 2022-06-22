@@ -19,9 +19,14 @@ export const db = (async function readDatabaseFile() {
     }
 })()
 
-export async function writeToFile(obj: staffObj) {
+export async function writeToFile(obj: null | staffObj | lead, newDb: null | (staffObj | lead)[]) {
+    if (obj === null) {
+        await fs.writeFile('database.json', JSON.stringify(newDb), 'utf8');
+        return;
+    }
     const database = await db;
-    database.push(obj);
+    let nextId = (database[database.length - 1]?.id + 1) || 1;
+    database.push({...obj, id: nextId});
     await fs.writeFile('database.json', JSON.stringify(database), 'utf8');
     return;
 }

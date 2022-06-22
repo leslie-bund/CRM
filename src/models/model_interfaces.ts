@@ -16,7 +16,7 @@ export interface staffObj {
     gender: string;
     phone: number;
     password: string;
-    id: number;
+    id?: number;
 }
 
 export interface lead {
@@ -25,6 +25,17 @@ export interface lead {
     gender: string;
     phone: string;
     address: string;
-    id: number;
+    id?: number;
+    username?: string;
+    notes?: string;
+}
+
+export interface leadReqObj {
+    firstname: string;
+    lastname: string;
+    email: string;
+    gender: string;
+    phone: number;
+    address: string;
     notes?: string;
 }
