@@ -57,3 +57,7 @@ export async function isValidUser(req: Request, res: Response, next: NextFunctio
         return res.render('login', {error: message.pop()});
     }
 }
+
+export async function updateLead() {
+    
+}

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { staffSchema, loginSchema, checkUnique, createStaff, leadSchema, createLead } from '../models/models';
-import { staffObj, lead } from "../models/model_interfaces";
+import { staffObj, lead, clientUpdateReqObj } from "../models/model_interfaces";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { db, writeToFile } from '../util';
@@ -119,6 +119,29 @@ export async function removeClient(id: number) {
     const database = await db;
     const client = database.find((record: staffObj | lead) => record.id === id);
     database.splice(database.indexOf(client), 1)
+    await writeToFile(null, database);
+    return;
+}
+
+export async function getClientById (id: number) {
+    const database = await db;
+    const client = database.find((record: staffObj | lead) => record.id === id);
+    return client;
+}
+
+
+export async function updateClient (id: number, obj: clientUpdateReqObj) {
+    const database = await db;
+
+    database.forEach((element: lead, index: number) => {
+        if (element.id === id) {
+            database[index].fullname = obj.firstname + ' ' + obj.lastname;
+            database[index].phone = obj.phone;
+            database[index].address = obj.address;
+            database[index].notes = obj.notes;
+        }
+    });
+
     await writeToFile(null, database);
     return;
 }

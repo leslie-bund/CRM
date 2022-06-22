@@ -39,3 +39,11 @@ export interface leadReqObj {
     address: string;
     notes?: string;
 }
+
+export interface clientUpdateReqObj {
+    firstname: string;
+    lastname: string;
+    phone: string;
+    address: string;
+    notes: string;
+}

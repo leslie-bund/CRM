@@ -25,15 +25,12 @@ block content
                                     i.text-muted.text-info Female
                                 -else
                                     i.text-muted.text-info Male
-                                span.text-muted.rounded.mb-1.pb-1(style='font-size: 12px; border-bottom: 1px solid grey') 📥    #{item.email}
-                                span.text-muted.rounded.mb-1.pb-1(style='font-size: 12px; border-bottom: 1px solid grey') 📞    #{item.phone}
-                                span.text-muted.rounded.mb-1.pb-1(style='font-size: 12px; border-bottom: 1px solid grey') 📍    #{item.address}
-                                span.text-muted.rounded.pb-1(style='font-size: 12px; border-bottom: 1px solid grey') 🖋    #{item.notes}
+                                span.text-muted.rounded.my-2(style='font-size: 12px;') 📥 <br/>#{item.email}
+                                span.text-muted.rounded.mb-2(style='font-size: 12px;') 📞 <br/>#{item.phone}
+                                span.text-muted.rounded.mb-2(style='font-size: 12px;') 📍<br/>#{item.address}
+                                span.text-muted.rounded.pb-1(style='font-size: 12px;') 🖋 <br/>#{item.notes}
                             div.pe-5.pt-4
-                                a.d-block.btn.btn-primary.btn-sm.mb-3(href='/users/#{item.id}') Edit
+                                a.d-block.btn.btn-primary.btn-sm.mb-3(href='/users/edit/#{item.id}') Edit
                                 a.btn.btn-danger.btn-sm(href='/users/remove/#{item.id}') Delete
-                                //- form(method='post', action='/users/remove', autocomplete='on')
-                                //-     input.visually-hidden(type='text', name='id', value='#{item.id}')
-                                //-     input.position-absolute.btn.btn-sm.btn-danger(type='submit', value='Delete')
         - else 
             .h1.text-muted.text-center Add a new customer

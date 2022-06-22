@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  .container    
+    h1.display-1.text-primary.text-shadow.text-center Edit Lead
+    - if (typeof errorMsg === 'string')
+        -if (flag === 'success')
+            .alert.alert-success.d-flex.align-items-center(role='alert')
+                svg.bi.bi-exclamation-triangle-fill.flex-shrink-0.me-2(xmlns="http://www.w3.org/2000/svg", width="24", height="24", fill="currentColor", viewBox="0 0 16 16", role="img", aria-label="Warning:")
+                    path(d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z")
+                div= errorMsg
+        -else 
+            .alert.alert-warning.d-flex.align-items-center(role='alert')
+                svg.bi.bi-exclamation-triangle-fill.flex-shrink-0.me-2(xmlns="http://www.w3.org/2000/svg", width="24", height="24", fill="currentColor", viewBox="0 0 16 16", role="img", aria-label="Warning:")
+                    path(d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z")
+                div= errorMsg
+    .card.border-primary.my-5.mx-lg-5.pb-5.shadow
+      .card-header.mb-3.text-muted.text-center Update customer info <br/>
+        a.btn.btn-primary.btn-sm.mt-3(href='/users') Home
+      .card-body
+        .row 
+            .col-md-6
+                .d-flex.flex-column.justify-content-start.p-4
+                    span.mb-3.fw-bold.h1 #{item.fullname}
+                    -if (item.gender === 'f')
+                        i.text-muted.text-info.fw-1 Female
+                    -else
+                        i.text-muted.text-info.fw-1 Male
+                    span.text-muted.my-3.pb-3 📥 <br/>#{item.email}
+                    span.text-muted.mb-3.pb-3 📞 <br/>#{item.phone}
+                    span.text-muted.mb-3.pb-3 📍<br/>#{item.address}
+                    span.text-muted.pb-3 🖋 <br/>#{item.notes}
+            .col-md-6
+                form(method='post', action='/users/edit/#{item.id}', auto-complete='on')
+                        .d-block.mx-3.mb-3
+                            label.visually-hidden(for='firstname')
+                            .input-group
+                                input.form-control#firstname(type='text', placeholder='Firstname', name='firstname', required)
+                        .d-block.mx-3.mb-3
+                            label.visually-hidden(for='lastname')
+                            .input-group
+                                input.form-control#lastname(type='text', placeholder='Lastname', name='lastname', required)
+                        .d-block.mx-3.mb-3
+                            label.visually-hidden(for='phone')
+                            .input-group
+                                .input-group-text 📲
+                                input.form-control#phone(type='tel', inputmode='tel', placeholder='2348056780923', name='phone', required)
+                        .d-block.mb-3.mx-3
+                            label.visually-hidden(for='addr')
+                            .input-group
+                                .input-group-text 📍
+                                input.form-control#addr(type='text', placeholder='Address', name='address')
+                        .d-block.mb-3.mx-3
+                            label.visually-hidden(for='notes')
+                            textarea.form-control(name="notes", cols="30", rows="3") 
+                        .d-block.mx-3.mt-5
+                            input.btn.btn-primary.w-100(type='submit', value='Add')
