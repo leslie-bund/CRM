@@ -37,7 +37,7 @@ export async function signupPostHandler(req: Request, res: Response, next: NextF
     // Send Validation error back to client
     if (error) {
         res.header('Refresh', '5')
-       return res.render('signup', {errorMsg: `${error.message}`});
+        return res.render('signup', {errorMsg: `${error.message}`});
     }
 
     // Ensure no duplicate email
@@ -57,7 +57,8 @@ export async function signupPostHandler(req: Request, res: Response, next: NextF
     // Sign token to expire in 2mins
     const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`, { expiresIn: 600 });
     res.cookie('authorization', token)
-    res.redirect(301, '../users');
+    res.status(301)
+    res.render('login', { errorMsg:  `Sign up successful. Please Login again`, flag: 'success'});
 }
 
 export function loginGetHandler(req: Request, res: Response, next: NextFunction) {

@@ -40,7 +40,9 @@ export async function isValidUser(req: Request, res: Response, next: NextFunctio
       
       // Confirm that payload exists
       const database = await db;
-      const exists = database.some((element: staffObj | lead) => element.id === payload.id)
+      const exists = database.some((element: staffObj | lead) => {
+            return element.id === payload.id
+        })
 
       if (exists) {
         next();
@@ -59,5 +61,5 @@ export async function isValidUser(req: Request, res: Response, next: NextFunctio
 }
 
 export async function updateLead() {
-    
+
 }
