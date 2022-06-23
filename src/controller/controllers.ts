@@ -73,7 +73,7 @@ export async function loginPostHandler(req: Request, res: Response, next: NextFu
     // Send Validation error back to client
     if (error) {
         res.header('Refresh', '5')
-        return res.render('login', {error: `${error.message}`});
+        return res.render('login', {errorMsg: `${error.message}`});
     }
 
     // Ensure username exists
@@ -85,7 +85,7 @@ export async function loginPostHandler(req: Request, res: Response, next: NextFu
     // Send db username validation error back to client
     if (!staff) {
         res.header('Refresh', '5')
-        return res.render('login', {error: `Username ${value.username} does not exist`});
+        return res.render('login', {errorMsg: `Username ${value.username} does not exist`});
     }
 
     // Validate password
@@ -103,7 +103,7 @@ export async function loginPostHandler(req: Request, res: Response, next: NextFu
             return res.redirect(301,'../users');
         } else {
             res.header('Refresh', '5')
-            return res.render('login', {error: `Wrong Password`});
+            return res.render('login', {errorMsg: `Wrong Password`});
         }
     });
 }

@@ -3,7 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import path from 'path';
-
+import methodOverride from 'method-override';
 import {indexRouter} from './routes/index';
 import {signUpRouter} from './routes/signup';
 import {loginRouter} from './routes/login';
@@ -15,6 +15,8 @@ export const app = express();
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'jade');
 
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,6 +26,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', indexRouter);
 app.use('/signup', signUpRouter);
 app.use('/login', loginRouter);
+app.use(methodOverride('_method'));
 
 app.use('/users', usersRouter);
 

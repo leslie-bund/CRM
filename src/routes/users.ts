@@ -18,7 +18,7 @@ usersRouter.route('/edit/:id')
       const lead = await getClientById(Number(req.params.id));
       res.render('user', { item: {...lead} })
     })
-    .post(async function(req: Request, res: Response, next: NextFunction) {
+    .put(async function(req: Request, res: Response, next: NextFunction) {
       const lead = await getClientById(Number(req.params.id));
       await updateClient(Number(req.params.id), req.body)
       return res.render('user', {errorMsg: `Client ${req.body.firstname + ' ' + req.body.lastname} successfully updated`, flag: 'success', item: {...lead}});
@@ -34,7 +34,7 @@ usersRouter.route('/add')
 
 /** DELETE a single user */
 usersRouter.route('/remove/:id')
-    .get(async function(req: Request, res: Response, next: NextFunction) {
+    .delete(async function(req: Request, res: Response, next: NextFunction) {
       await removeClient(Number(req.params.id));
       res.redirect('/users')
     });

@@ -31,6 +31,7 @@ block content
                                 span.text-muted.rounded.pb-1(style='font-size: 12px;') 🖋 <br/>#{item.notes}
                             div.pe-5.pt-4
                                 a.d-block.btn.btn-primary.btn-sm.mb-3(href='/users/edit/#{item.id}') Edit
-                                a.btn.btn-danger.btn-sm(href='/users/remove/#{item.id}') Delete
+                                form(method='post', action='/users/remove/#{item.id}?_method=DELETE')
+                                    input.btn.btn-danger.btn-sm(type='submit', value='Delete')
         - else 
             .h1.text-muted.text-center Add a new customer

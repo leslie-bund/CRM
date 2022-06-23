@@ -31,7 +31,7 @@ block content
                     span.text-muted.mb-3.pb-3 📍<br/>#{item.address}
                     span.text-muted.pb-3 🖋 <br/>#{item.notes}
             .col-md-6
-                form(method='post', action='/users/edit/#{item.id}', auto-complete='on')
+                form(method='post', action='/users/edit/#{item.id}?_method=PUT', auto-complete='on')
                         .d-block.mx-3.mb-3
                             label.visually-hidden(for='firstname')
                             .input-group
