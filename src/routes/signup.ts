@@ -5,6 +5,6 @@ export const signUpRouter = express.Router();
 /* GET signUp form page. */
 signUpRouter.get('/', signupGetHandler);
 
-  /* POST signUp form page. */
+/* POST signUp form page. */
 signUpRouter.post('/', signupPostHandler);
 

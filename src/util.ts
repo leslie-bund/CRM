@@ -28,15 +28,14 @@ export async function writeToFile(obj: null | staffObj | lead, newDb: null | (st
     let nextId = (database[database.length - 1]?.id + 1) || 1;
     database.push({...obj, id: nextId});
     await fs.writeFile('database.json', JSON.stringify(database), 'utf8');
-    return;
+    return nextId;
 }
 
 export async function isValidUser(req: Request, res: Response, next: NextFunction) {
-    const token = req.cookies.authorization
+    const token = req.cookies.authorization;
     
-    let payload: any
     try {
-      payload = jwt.verify(token, `Leslie_Will_Know_How_To_Code_Someday`);
+      const payload: any = jwt.verify(token, `Leslie_Will_Know_How_To_Code_Someday`);
       
       // Confirm that payload exists
       const database = await db;

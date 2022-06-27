@@ -74,19 +74,20 @@ export async function createStaff(obj: staffReqObj): Promise<void> {
     const { username, firstname, lastname, email, gender, phone, password } = obj;
 
 
-    bcrypt.hash(password, 8).then(async function updateDbAfterNewStaff(hash) {
-        // Store hash in your password DB.
-        const newStaff: staffObj = {
-            username,
-            fullname: `${firstname} ${lastname}`,
-            email,
-            gender,
-            phone,
-            password: hash,
-        }
-        await writeToFile(newStaff, null);
-    });
-    return;
+    const hash = bcrypt.hashSync(password, 8);
+    // .then(async function updateDbAfterNewStaff(hash) {
+    //     // Store hash in your password DB.
+    // });
+    const newStaff: staffObj = {
+        username,
+        fullname: `${firstname} ${lastname}`,
+        email,
+        gender,
+        phone,
+        password: hash,
+    }
+    const newId = await writeToFile(newStaff, null);
+    return newId;
 }
 
 export async function createLead(obj: leadReqObj) {
@@ -105,5 +106,3 @@ export async function createLead(obj: leadReqObj) {
     await writeToFile(lead, null)
     return;
 }
-
-// export async 

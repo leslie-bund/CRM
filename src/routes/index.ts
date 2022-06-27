@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
+import { landingPageHandler } from '../controller/controllers';
 export const indexRouter = express.Router();
 
 /* GET home page. */
-indexRouter.get('/', function(req: Request, res: Response) {
-  res.render('index', { title: 'Leslie\'s CRM' });
-});
+indexRouter.get('/', landingPageHandler);

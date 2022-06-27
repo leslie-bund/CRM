@@ -35,23 +35,23 @@ block content
                         .d-block.mx-3.mb-3
                             label.visually-hidden(for='firstname')
                             .input-group
-                                input.form-control#firstname(type='text', placeholder='Firstname', name='firstname', required)
+                                input.form-control#firstname(type='text', placeholder='Firstname', name='firstname', required, value='#{item.first}')
                         .d-block.mx-3.mb-3
                             label.visually-hidden(for='lastname')
                             .input-group
-                                input.form-control#lastname(type='text', placeholder='Lastname', name='lastname', required)
+                                input.form-control#lastname(type='text', placeholder='Lastname', name='lastname', required, value='#{item.last}')
                         .d-block.mx-3.mb-3
                             label.visually-hidden(for='phone')
                             .input-group
                                 .input-group-text 📲
-                                input.form-control#phone(type='tel', inputmode='tel', placeholder='2348056780923', name='phone', required)
+                                input.form-control#phone(type='tel', inputmode='tel', placeholder='2348056780923', name='phone', required, value='#{item.phone}')
                         .d-block.mb-3.mx-3
                             label.visually-hidden(for='addr')
                             .input-group
                                 .input-group-text 📍
-                                input.form-control#addr(type='text', placeholder='Address', name='address')
+                                input.form-control#addr(type='text', placeholder='Address', name='address', value='#{item.address}')
                         .d-block.mb-3.mx-3
                             label.visually-hidden(for='notes')
-                            textarea.form-control(name="notes", cols="30", rows="3") 
+                            textarea.form-control(name="notes", placeholder="Enter new notes or copy old notes", value="#{item.notes}", cols="30", rows="3") 
                         .d-block.mx-3.mt-5
                             input.btn.btn-primary.w-100(type='submit', value='Add')

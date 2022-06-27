@@ -1,4 +1,4 @@
 node_modules
-src
+__tests__
 database.json
 README.md

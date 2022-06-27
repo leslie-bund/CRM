@@ -6,9 +6,25 @@ import bcrypt from 'bcrypt';
 import { db, writeToFile } from '../util';
 const debug = require('debug')('week5-009:server');
 
-
-export function signupGetHandler(req: Request, res: Response, next: NextFunction) {
+/** Route Handlers */
+export function signupGetHandler(req: Request, res: Response) {
+    res.status(200)
     return res.render('signup');
+  }
+
+export function landingPageHandler(req: Request, res: Response) {
+    res.status(200)
+    return res.render('index', { title: 'Leslie\'s CRM' });
+  }
+
+export function collectNewLeadInfo(req: Request, res: Response) {
+    res.status(200)
+    return res.render('add')
+  }
+
+export async function removeLead(req: Request, res: Response) {
+    await removeClient(Number(req.params.id));
+    return res.redirect('/users')
   }
 
 export async function addNewLead(req: Request, res: Response) {
@@ -54,11 +70,11 @@ export async function signupPostHandler(req: Request, res: Response, next: NextF
         id: id,
     }
     
-    // Sign token to expire in 2mins
+    // Signed token to expire in 10mins
     const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`, { expiresIn: 600 });
     res.cookie('authorization', token)
     res.status(301)
-    res.render('login', { errorMsg:  `Sign up successful. Please Login again`, flag: 'success'});
+    return res.redirect('/users')
 }
 
 export function loginGetHandler(req: Request, res: Response, next: NextFunction) {
@@ -96,7 +112,7 @@ export async function loginPostHandler(req: Request, res: Response, next: NextFu
                 time: Date(),
                 id: staff.id,
             }
-            
+            // Signed token to expire 3mins
             const token = jwt.sign(data, `Leslie_Will_Know_How_To_Code_Someday`, { expiresIn: 180 });
 
             res.cookie('authorization', token);
@@ -112,10 +128,25 @@ export async function getAllUsers(req: Request, res: Response) {
     // Read all users from db and filter only customers
     const database = await db;
     const customers = database.filter((lead: staffObj | lead) => !lead.hasOwnProperty('password'))
-
+    res.status(200)
     return res.render('users', {data: customers})
 }
 
+export async function viewSingleLead(req: Request, res: Response) {
+    const lead = await getClientById(Number(req.params.id));
+    const [firstname, lastname] = lead.fullname.split(' ');
+    lead.first = firstname;
+    lead.last = lastname;
+    return res.render('user', { item: {...lead} })
+  }
+
+export async function updateLead(req: Request, res: Response) {
+    const lead = await getClientById(Number(req.params.id));
+    await updateClient(Number(req.params.id), req.body)
+    return res.render('user', {errorMsg: `Client ${req.body.firstname + ' ' + req.body.lastname} successfully updated`, flag: 'success', item: {...lead}});
+  }
+
+/** Helper Functions for route Handlers */
 export async function removeClient(id: number) {
     const database = await db;
     const client = database.find((record: staffObj | lead) => record.id === id);
